@@ -11,9 +11,12 @@ services:
     networks:
       - symfony_network
     depends_on:
-      - db
+      - database
     environment:
-      DATABASE_URL: mysql://root:root@db:3306/my_database
+      DATABASE_URL: mysql://root:root@database:3306/my_database
+    build:
+      context: .
+      dockerfile: Dockerfile
 
   # Nginx
   nginx:
@@ -30,8 +33,8 @@ services:
       - app
 
   # MySQL
-  db:
-    image: mysql:5.7
+  database:
+    image: mysql:8.0
     container_name: symfony_db
     environment:
       MYSQL_ROOT_PASSWORD: root
