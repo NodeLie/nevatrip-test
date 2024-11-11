@@ -20,13 +20,15 @@ class OrderController extends AbstractController
 
     public function createOrder(Request $request): Response
     {
-        $eventId = $request->request->get('event_id');
-        $eventDate = $request->request->get('event_date');
-        $adultPrice = $request->request->get('ticket_adult_price');
-        $adultQuantity = $request->request->get('ticket_adult_quantity');
-        $kidPrice = $request->request->get('ticket_kid_price');
-        $kidQuantity = $request->request->get('ticket_kid_quantity');
-
+        $data = json_decode($request->getContent(), true);
+        
+        $eventId = $data['event_id'] ?? null;
+        $eventDate = $data['event_date'] ?? null;
+        $adultPrice = $data['ticket_adult_price'] ?? null;
+        $adultQuantity = $data['ticket_adult_quantity'] ?? null;
+        $kidPrice = $data['ticket_kid_price'] ?? null;
+        $kidQuantity = $data['ticket_kid_quantity'] ?? null;
+        
         try {
             $order = $this->orderService->saveOrder($eventId, $eventDate, $adultPrice, $adultQuantity, $kidPrice, $kidQuantity);
 
